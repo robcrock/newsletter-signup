@@ -84,8 +84,12 @@ export default function Home() {
         </Card>
       )}
       {!isVisible && (
-        <Card className="flex w-[504px] flex-col gap-10 rounded-[36px] px-16 py-12">
-          <Image src={icon_success} alt={"list item icon"} />
+        <Card className="flex min-h-screen w-full flex-col gap-10 rounded-none p-6 md:min-h-[520px] md:w-[504px] md:rounded-[36px] md:px-16 md:py-12">
+          <Image
+            className="mt-[124px] md:mt-0"
+            src={icon_success}
+            alt={"list item icon"}
+          />
           <CardHeader className="flex flex-col gap-6 p-0">
             <CardTitle className="text-5xl font-bold">
               Thanks for subscribing!
@@ -96,7 +100,7 @@ export default function Home() {
               the button inside to confirm your subscription.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-10 p-0">
+          <CardContent className="mt-auto flex flex-col gap-10 p-0 md:mt-0">
             <Button className="w-full" onClick={handleDismiss}>
               Dismiss message
             </Button>
