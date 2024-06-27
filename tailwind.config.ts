@@ -26,6 +26,7 @@ const config = {
       // Custom color palette
       colors: {
         tomato: "hsl(4, 100%, 67%)",
+        vermellion: "rgba(255, 97, 85, 0.15)",
         "dark-slate-grey": "hsl(234, 29%, 20%)",
         "charcoal-grey": "hsl(235, 18%, 26%)",
         grey: "hsl(231, 7%, 60%)",

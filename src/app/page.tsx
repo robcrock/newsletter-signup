@@ -13,13 +13,36 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useWindowSize } from "@uidotdev/usehooks";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const formSchema = z.object({
+  email: z.string().email("Valid email required"),
+});
+
 export default function Home() {
   const [isVisible, setIsVisible] = useState(true);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
 
   const { width } = useWindowSize();
   if (!width) return null;
@@ -27,7 +50,10 @@ export default function Home() {
 
   const illustration = mobile ? illustration_mobile : illustration_desktop;
 
-  const handleSubmit = () => {
+  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+    console.log("form state", form.formState);
+    form.reset();
     setIsVisible(false);
   };
 
@@ -35,12 +61,12 @@ export default function Home() {
     setIsVisible(true);
   };
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-0 bg-gray-700 md:p-24">
+    <main className="flex h-screen flex-col items-center justify-start gap-0 md:justify-center md:bg-gray-700 md:p-24">
       {/* card */}
       {/* <!-- Sign-up form start --> */}
       {isVisible && (
         <Card className="flex w-full flex-col-reverse items-center gap-0 rounded-none p-0 md:h-[641px] md:w-[928px] md:flex-row md:gap-6 md:rounded-[36px] md:p-6">
-          <section className="p-6 md:p-9">
+          <section className="w-[375px] p-6 md:w-full md:p-9">
             <CardHeader className="mb-6 flex flex-col gap-2 p-0 md:gap-6">
               <CardTitle className="text-[40px] font-bold md:text-5xl">
                 Stay updated!
@@ -64,20 +90,33 @@ export default function Home() {
                   And much more!
                 </li>
               </ul>
-              <form
-                className="flex flex-col gap-6"
-                action="submit"
-                onSubmit={handleSubmit}
-              >
-                <div className="grid w-full max-w-sm items-center gap-2">
-                  <Label htmlFor="email">Email address</Label>
-                  <Input type="email" placeholder="email@company.com" />
-                </div>
-
-                <Button className="w-full" type="submit">
-                  Subscribe to monthly newsletter
-                </Button>
-              </form>
+              <Form {...form}>
+                <form
+                  className="flex flex-col gap-6"
+                  onSubmit={form.handleSubmit(handleSubmit)}
+                >
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem className="grid w-full max-w-sm items-center">
+                        <div className="flex justify-between">
+                          <FormLabel className="text-xs" htmlFor="email">
+                            Email address
+                          </FormLabel>
+                          <FormMessage className="text-xs" />
+                        </div>
+                        <FormControl>
+                          <Input placeholder="email@company.com" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <Button className="w-full bg-dark-slate-grey" type="submit">
+                    Subscribe to monthly newsletter
+                  </Button>
+                </form>
+              </Form>
             </CardContent>
           </section>
           <Image className="" src={illustration} alt={"Sign-up Illustration"} />
@@ -101,7 +140,10 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent className="mt-auto flex flex-col gap-10 p-0 md:mt-0">
-            <Button className="w-full" onClick={handleDismiss}>
+            <Button
+              className="w-full bg-dark-slate-grey"
+              onClick={handleDismiss}
+            >
               Dismiss message
             </Button>
           </CardContent>
