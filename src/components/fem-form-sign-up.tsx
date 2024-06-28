@@ -47,7 +47,10 @@ export const FormSignUp = ({ form, handleSubmit }: Props) => {
             </FormItem>
           )}
         />
-        <Button className="w-full bg-dark-slate-grey" type="submit">
+        <Button
+          className="w-full bg-dark-slate-grey hover:bg-gradient-to-bl hover:from-[#FF6A3A] hover:to-[#FF527B] hover:shadow-[0px_16px_32px_0px_#FF615550]"
+          type="submit"
+        >
           Subscribe to monthly newsletter
         </Button>
       </form>
