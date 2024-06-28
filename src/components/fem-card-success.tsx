@@ -16,7 +16,7 @@ type Props = {
 export const CardSuccess = ({ handleDismiss }: Props) => {
   return (
     <Card className="flex min-h-screen w-full flex-col-reverse justify-end gap-10 rounded-none p-6 md:min-h-[520px] md:w-[504px] md:rounded-[36px] md:px-16 md:py-12">
-      <section className="flex h-full flex-col justify-between">
+      <section className="mr-6 flex h-full flex-col justify-between md:mr-0">
         <FemCardHeader />
         <FemCardContent handleDismiss={handleDismiss} />
       </section>

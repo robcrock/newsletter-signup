@@ -8,7 +8,8 @@ import { z } from "zod";
 import { CardSuccess } from "@/components/fem-card-success";
 
 export default function Home() {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isNotSignedUp, setIsNotSignedUp] = useState(true);
+  const isSignedUp = !isNotSignedUp;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -21,17 +22,17 @@ export default function Home() {
     console.log(values);
     console.log("form state", form.formState);
     form.reset();
-    setIsVisible(false);
+    setIsNotSignedUp(false);
   };
 
   const handleDismiss = () => {
-    setIsVisible(true);
+    setIsNotSignedUp(true);
   };
 
   return (
     <main className="flex h-screen flex-col items-center justify-start gap-0 md:justify-center md:bg-gray-700 md:p-24">
-      {isVisible && <CardSignUp form={form} handleSubmit={handleSubmit} />}
-      {!isVisible && <CardSuccess handleDismiss={handleDismiss} />}
+      {isNotSignedUp && <CardSignUp form={form} handleSubmit={handleSubmit} />}
+      {isSignedUp && <CardSuccess handleDismiss={handleDismiss} />}
     </main>
   );
 }
